@@ -1,0 +1,2 @@
+model,dataset,epochs_requested,epochs_executed,batch_size,learning_rate,num_parameters,best_val_accuracy,final_train_accuracy,final_test_accuracy,final_validation_accuracy,final_train_loss,final_test_loss,final_validation_loss,training_time_seconds
+resnet34,fer2013,80,22,16,0.001,21287750,0.4240400667779633,0.9620908976033024,0.6546096904441454,0.39232053422370616,0.11988051495194119,1.5560459682983296,3.9730114921143183,1812.8979229927063
