@@ -1,0 +1,65 @@
+Résumé des résultats déposés
+
+Contenu du dépôt 
+- modèles entraînés sauvegardés (.pth)
+- courbes d'entraînement (loss  accuracy)
+- fichiers CSV des métriques par époque
+- résultats d'évaluation sur JAFFE
+- script d'évaluation utilisé
+- script d'entraînement modifié
+
+Ce qui a été fait 
+- ajout de la sauvegarde automatique des métriques
+- organisation des sorties dans les dossiers models  reports  results
+- paramétrisation du script d'entraînement
+- comparaison de plusieurs modèles sur FER2013
+- test du modèle sur le dataset JAFFE sans les expressions neutres
+
+Résultat JAFFE 
+- évaluation exécutée correctement
+- accuracy observée  0.393443
+- certaines classes n'ont pas été prédites, ce qui provoque les warnings de precision à 0
+- cela suggère une généralisation partielle mais limitée sur JAFFE
+
+Point important 
+- le dataset JAFFE ne doit pas être redistribué sur GitHub
+- seules les métriques, figures, scripts et résultats dérivés sont partagés ici
+
+Fichiers les plus importants à regarder 
+- reports
+- results
+- models
+- eval_best_model.py
+- train_eval.pyRésumé des résultats déposés
+
+Contenu du dépôt 
+- modèles entraînés sauvegardés (.pth)
+- courbes d'entraînement (loss  accuracy)
+- fichiers CSV des métriques par époque
+- résultats d'évaluation sur JAFFE
+- script d'évaluation utilisé
+- script d'entraînement modifié
+
+Ce qui a été fait 
+- ajout de la sauvegarde automatique des métriques
+- organisation des sorties dans les dossiers models  reports  results
+- paramétrisation du script d'entraînement
+- comparaison de plusieurs modèles sur FER2013
+- test du modèle sur le dataset JAFFE sans les expressions neutres
+
+Résultat JAFFE 
+- évaluation exécutée correctement
+- accuracy observée  0.393443
+- certaines classes n'ont pas été prédites, ce qui provoque les warnings de precision à 0
+- cela suggère une généralisation partielle mais limitée sur JAFFE
+
+Point important 
+- le dataset JAFFE ne doit pas être redistribué sur GitHub
+- seules les métriques, figures, scripts et résultats dérivés sont partagés ici
+
+Fichiers les plus importants à regarder 
+- reports
+- results
+- models
+- eval_best_model.py
+- train_eval.py
