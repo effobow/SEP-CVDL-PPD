@@ -1,0 +1,4 @@
+Model: gimefive
+Dataset: fer2013
+Test Loss: 0.994085
+Test Accuracy: 0.680518

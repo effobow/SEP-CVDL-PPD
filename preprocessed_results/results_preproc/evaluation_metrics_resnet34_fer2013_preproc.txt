@@ -1,0 +1,4 @@
+Model: resnet34
+Dataset: fer2013
+Test Loss: 2.026724
+Test Accuracy: 0.655451

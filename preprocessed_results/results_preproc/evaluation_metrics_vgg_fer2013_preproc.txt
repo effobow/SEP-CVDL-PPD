@@ -1,0 +1,4 @@
+Model: vgg
+Dataset: fer2013
+Test Loss: 1.289925
+Test Accuracy: 0.504711

@@ -1,0 +1,2 @@
+model,dataset,epochs_requested,epochs_executed,batch_size,learning_rate,num_parameters,best_val_accuracy,final_train_accuracy,final_test_accuracy,final_validation_accuracy,final_train_loss,final_test_loss,final_validation_loss,training_time_seconds
+gimefive,fer2013,80,67,16,0.001,10478086,0.4691151919866444,0.8613790489027421,0.6993606998654105,0.4540901502504174,0.3697932616624268,1.000298673107404,2.5691672500811125,3046.4643726348877
