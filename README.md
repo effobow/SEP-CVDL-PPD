@@ -37,7 +37,7 @@ Les résultats sont regroupés dans le dossier `results/`, avec une organisation
 - `results/fer2013_pretraite/`  
   contient les résultats obtenus après relance des expériences avec une version **prétraitée** du dataset FER2013
 
-Cette organisation permet de mieux distinguer les différentes étapes du projet et de retrouver plus facilement les sorties associées à chaque expérience.
+Cette organisation permet de mieux distinguer les différentes étapes du projet et de retrouver plus facilement les sorties associées à chaque expérience. 
 
 ## Modèles comparés
 
@@ -46,8 +46,8 @@ Dans nos expériences, nous avons comparé plusieurs architectures :
 - GiMeFive
 - GiMeFiveRes
 - ResNet18
-- ResNet34
-- VGG
+- ResNet34 
+- VGG 
 
 ## Jeu de données externe
 
@@ -61,7 +61,7 @@ Le dossier `documentation_modeles_ajoutes/` regroupe des fichiers de travail com
 ---
 Projet réalisé dans le cadre de notre master MLSD.
 
-Dan Sebag
-Gaspard Lugat
-Mehdi Benayed
+Dan Sebag,
+Gaspard Lugat,
+Mehdi Benayed,
 Dimitri Deramond
