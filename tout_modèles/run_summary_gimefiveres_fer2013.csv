@@ -1,2 +1,0 @@
-model,dataset,epochs_requested,epochs_executed,batch_size,learning_rate,num_parameters,best_val_accuracy,final_train_accuracy,final_test_accuracy,final_validation_accuracy,final_train_loss,final_test_loss,final_validation_loss,training_time_seconds
-gimefiveres,fer2013,80,27,16,0.001,95051014,0.4006677796327212,0.9858893896634514,0.6403095558546433,0.37061769616026713,0.044136961596455325,1.8560786492005679,4.812753225627699,4071.2783937454224

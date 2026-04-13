@@ -9,7 +9,7 @@ import os
 from get_dataset import GiMeFiveDataset
 from models import GiMeFive
 
-device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def main():
     os.makedirs("results", exist_ok=True)
@@ -21,16 +21,30 @@ def main():
                              std=[0.229, 0.224, 0.225]),
     ])
 
+    #test_dataset = GiMeFiveDataset(
+    #    csv_file='archive/FER2013/test_FER_labels.csv',
+    #    img_dir='archive/FER2013/test/',
+    #    transform=transform
+    #)
+
+    #test_dataset = GiMeFiveDataset(
+    #    csv_file='archive/EXPW/expw_labels.csv',
+    #    img_dir='archive/EXPW/images/',
+    #    transform=transform
+    #)
+
     test_dataset = GiMeFiveDataset(
-        csv_file='archive/FER2013/test_FER_labels.csv',
-        img_dir='archive/FER2013/test/',
+        csv_file='archive/JAFFE/jaffe_labels.csv',
+        img_dir='archive/JAFFE/images/',
         transform=transform
     )
 
     test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False, num_workers=0)
 
     model = GiMeFive().to(device)
-    model.load_state_dict(torch.load('models/best_model.pth', map_location=device))
+    #model.load_state_dict(torch.load('models/best_model.pth', map_location=device))
+    #model.load_state_dict(torch.load('models/best_model_gimefive_fer2013.pth', map_location=device))
+    model.load_state_dict(torch.load('models/best_model_gimefive_fer2013.pth', map_location=device))
     model.eval()
 
     criterion = nn.CrossEntropyLoss()

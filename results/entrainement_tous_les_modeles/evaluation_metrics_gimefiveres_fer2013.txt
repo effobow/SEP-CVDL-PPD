@@ -1,0 +1,4 @@
+Model: gimefiveres
+Dataset: fer2013
+Test Loss: 1.236712
+Test Accuracy: 0.630384
