@@ -1,192 +1,66 @@
-# GiMeFive✋: Towards Interpretable Facial Emotion Classification
+# SEP-CVDL-PPD
 
-<div align="center" style="text-align: center; white-space: nowrap;">
-  <a href="https://github.com/werywjw/SEP-CVDL/blob/main/final/GIMEFIVE%3A%20Towards%20Interpretable%20Facial%20Emotion%20Classification.pdf">Paper PDF Version📄</a> &nbsp; | &nbsp;
-  <a href="https://github.com/werywjw/SEP-CVDL/blob/main/presentation/SEP-CVDL.pdf">Presentation PDF Version🎥</a> &nbsp; | &nbsp;
-  <a href="https://github.com/werywjw/SEP-CVDL/blob/main/proposal/Emotion%20Recognition%20From%20Facial%20Expressions%3A%20A%20Preliminary%20Report.pdf">Proposal PDF Version📃</a>
-</div>
-<!-- 
-## Submission Index
-- [x] Final Report ([GiMeFive: Towards Interpretable Facial Emotion Classification](https://github.com/werywjw/SEP-CVDL/blob/main/final/GIMEFIVE%3A%20Towards%20Interpretable%20Facial%20Emotion%20Classification.pdf))
-- [x] requirements.txt ([requirements of packages for GiMeFive](https://github.com/werywjw/SEP-CVDL/blob/main/requirements.txt))
-- [x] README.md ([README for GiMeFive](https://github.com/werywjw/SEP-CVDL/blob/main/README.md))
-- [x] best_GiMeFive.pth ([saved GiMeFive model](https://github.com/werywjw/SEP-CVDL/blob/main/best_GiMeFive.pth))
-- [x] classification_scores_valid.csv ([result from script of classification scores](https://github.com/werywjw/SEP-CVDL/blob/main/classification_scores_valid.csv))
-- [x] script_csv.py ([script that iterates through folders and creates csv file](https://github.com/werywjw/SEP-CVDL/blob/main/script_csv.py))
-- [x] script_csv.sh ([alternative script](https://github.com/werywjw/SEP-CVDL/blob/main/script_csv.sh))
-- [x] script_video.py ([Script that classifies and saves videos and live camera streams](https://github.com/werywjw/SEP-CVDL/blob/main/script_video.py))
-- [x] script_label.ipynb ([Jupyter Notebook for preprocess images and labels](https://github.com/werywjw/SEP-CVDL/blob/main/script_label.ipynb))
-- [x] get_dataset.py ([Class GiMeFiveDataset](https://github.com/werywjw/SEP-CVDL/blob/main/get_dataset.py))
-- [x] models.py ([GiMeFive and all sota models (VGG & ResNet)](https://github.com/werywjw/SEP-CVDL/blob/main/models.py))
-- [x] train_eval.py ([Train and evaluate the models](https://github.com/werywjw/SEP-CVDL/blob/main/train_eval.py))
-- [x] models_train_eval.ipynb ([Jupyter Notebook version](https://github.com/werywjw/SEP-CVDL/blob/main/models_train_eval.ipynb))
-- [x] hook.py ([Class Hook for GradCAM and video](https://github.com/werywjw/SEP-CVDL/blob/main/hook.py))
-- [x] plot_gcam.ipynb ([Jupyter Notebook for GradCAM visulization](https://github.com/werywjw/SEP-CVDL/blob/main/plot_gcam.ipynb))
-- [x] plot_heatmap.ipynb ([Jupyter Notebook for Heatmap visulization](https://github.com/werywjw/SEP-CVDL/blob/main/plot_gcam.ipynb))
-- [x] eval_video.ipynb ([Jupyter Notebook that classifies and saves videos and live camera](https://github.com/werywjw/SEP-CVDL/blob/main/eval_video.ipynb))
-- [x] slurm_jobs.sh ([script for slurm](https://github.com/werywjw/SEP-CVDL/blob/main/slurm/slurm_job.sh))
-- [x] installed_packages.txt ([requirements of packages for slurm](https://github.com/werywjw/SEP-CVDL/blob/main/slurm/installed_packages.txt))
-- [ ] video.mp4 ([test video without evaluation](https://github.com/werywjw/SEP-CVDL/blob/main/video/video.mp4))
-- [ ] eval_video.mp4 ([evaluated video](https://github.com/werywjw/SEP-CVDL/blob/main/eval_video.mp4))
-- [ ] shape_predictor_68_face_landmarks.dat ([pretrained model of Landmarks](https://github.com/werywjw/SEP-CVDL/blob/main/shape_predictor_68_face_landmarks.dat))
-- [ ] haarcascade_frontalface_default.xml ([pretrained model of haar cascade](https://github.com/werywjw/SEP-CVDL/blob/main/haarcascade_frontalface_default.xml)) -->
+Ce dépôt contient notre travail autour du projet **SEP-CVDL**, consacré à la classification des émotions faciales.  
+L’objectif a été de reprendre le projet d’origine, de reproduire ses premiers résultats, puis d’y apporter plusieurs améliorations pour rendre les expériences plus simples à lancer, mieux organisées et plus faciles à analyser.
 
-## Abstract
+## Objectifs du travail
 
-Deep convolutional neural networks have been shown to successfully recognize facial emotions for the past years in the realm of computer vision. However, the existing detection approaches are not always reliable or explainable, we here propose our model GiMeFive with interpretations, i.e., via layer activations and gradient-weighted class activation mapping. We compare against the state-of-the-art methods to classify the six facial emotions. Empirical results show that our model outperforms the previous methods in terms of accuracy on two *Facial Emotion Recognition* (FER) benchmarks and our aggregated FER GiMeFive. Furthermore, we explain our work in real-world image and video examples, as well as real-time live streams.
+Notre travail s’est structuré autour de plusieurs axes :
 
-## Overview
+- tester le modèle sur des jeux de données externes, en particulier **JAFFE**
+- rendre le script d’entraînement plus flexible grâce à des paramètres en ligne de commande
+- automatiser le lancement de plusieurs modèles à la suite
+- mieux organiser les sorties du pipeline
+- améliorer la traçabilité des résultats produits
 
-![](./final/pipeline.png)
+## Scripts principaux
 
-## Results
+Les scripts principaux du dépôt sont les suivants :
 
-![](./final/tab_result.png)
+- `train_eval.py` : script d’entraînement principal
+- `train_eval_preprocessed.py` : version adaptée pour les expériences avec prétraitement
+- `eval_best_model.py` : évaluation d’un modèle entraîné
+- `run_all_models_fer2013.bat` : lancement automatique de plusieurs modèles sur FER2013
+- `run_all_models_fer2013_preprocessed.bat` : lancement automatique des modèles sur la version prétraitée
+- `run_eval_all_preproc.bat` : évaluation des modèles prétraités
 
-<!-- <p align="center">
-  <img src="./final/fig_result.png" height="300" />
-  <img src="./final/matval.png" height="300" /> 
-</p> -->
+## Organisation des résultats
 
-## Requirements
+Les résultats sont regroupés dans le dossier `results/`, avec une organisation par type d’expérience :
 
-A detailed list of requirements can be found in `requirements.txt`. 
+- `results/axes_amelioration/jaffe/`  
+  contient les résultats liés au test sur le dataset **JAFFE**
 
-```
-pip install -r requirements.txt
-python3 -m pip install -r requirements.txt
-```
+- `results/entrainement_tous_les_modeles/`  
+  contient les résultats de comparaison entre plusieurs architectures sur **FER2013**
 
-## How to run the script to get the CSV file of classification scores?
-Please change the **filepath** to the image folder that you would like to try. 😄
+- `results/fer2013_pretraite/`  
+  contient les résultats obtenus après relance des expériences avec une version **prétraitée** du dataset FER2013
 
-- Option 1️⃣: Run the following command:
-```
-python3 script_csv.py 'data/valid'
-```
+Cette organisation permet de mieux distinguer les différentes étapes du projet et de retrouver plus facilement les sorties associées à chaque expérience.
 
-- Option 2️⃣: Use shell:
-```
-./script_csv.sh
-```
+## Modèles comparés
 
-## How to run the script to generate an XAI video from a given video path or a camera stream? 🥹 📹
+Dans nos expériences, nous avons comparé plusieurs architectures :
 
-Run one of the following commands: 
-```
-python3 script_video.py -h
+- GiMeFive
+- GiMeFiveRes
+- ResNet18
+- ResNet34
+- VGG
 
-python3 script_video.py -s camera
-python3 script_video.py -s video -i 'video/video.mp4'
-```
+## Jeu de données externe
 
-## How do our videos look like?
+Nous avons testé le modèle sur le dataset **JAFFE** afin d’observer sa capacité de généralisation en dehors de son cadre d’origine.  
+Nous avons également tenté une ouverture vers un autre dataset externe, **ExpW**, mais la version récupérée ne présentait pas une qualité suffisante pour être exploitée correctement dans l’étude finale.
 
-<p align="center">
-  <img src="./video/v1.gif" width="400" />
-  <img src="./video/v2.gif" width="400" /> 
-</p>
+## Contenu complémentaire
 
-## How to test the live demo with camera (old version)?
+Le dossier `documentation_modeles_ajoutes/` regroupe des fichiers de travail complémentaires liés à l’ajout et à l’analyse de modèles supplémentaires.
 
-Run the following command:
-```
-python3 eval_livecam.py
-```
+## Remarques
 
-Exit via `control` + `C`.
+Ce dépôt ne cherche pas à redéfinir totalement le projet d’origine, mais à proposer une version plus exploitable pour l’expérimentation, la comparaison de modèles et l’analyse des résultats.
 
-## Please kindly cite if you find this repository helpful 😸
-
-```
-@article{wang2024gimefive,
-  title={GiMeFive: Towards Interpretable Facial Emotion Classification},
-  author={Wang, Jiawen and Kawka, Leah},
-  journal={arXiv preprint arXiv:2402.15662},
-  year={2024}
-}
-```
-
-## Q&A
-
-### Where is our paper (final report) 📄?
-
-The PDF Version is [here](https://github.com/werywjw/SEP-CVDL/blob/main/final/GIMEFIVE%3A%20Towards%20Interpretable%20Facial%20Emotion%20Classification.pdf).
-
-### Where are our presentation slides 🎥?
-
-On [goolge docs](https://docs.google.com/presentation/d/14AazB5FY5jLyB5-9R6Ix7LoMX8yNR_illDAaYDCm8_s/edit#slide=id.g2b4d85efaed_0_31). 
-The shared link is available [here](https://docs.google.com/presentation/d/14AazB5FY5jLyB5-9R6Ix7LoMX8yNR_illDAaYDCm8_s/edit?usp=sharing). 
-The PDF Version is [here](https://github.com/werywjw/SEP-CVDL/blob/main/presentation/SEP-CVDL.pdf).
-
-### Where is our proposal (preliminary report) 📃?
-
-The PDF Version is [here](https://github.com/werywjw/SEP-CVDL/blob/main/proposal/Emotion%20Recognition%20From%20Facial%20Expressions%3A%20A%20Preliminary%20Report.pdf).
-
-### What are the emotion labels?
-
-😄 happiness (0)
-
-😲 surprise (1)
-
-😭 sadness (2)
-
-😡 anger (3)
-
-🤢 disgust (4)
-
-😨 fear (5)
-
-### How to generate a requirements.txt?
-```
-pipreqs /Users/wery/Desktop/SEP-CVDL
-pip3 freeze > requirements.txt
-```
-
-### How to resolve the conflicts?
-```
-git status
-```
-See what is asked to be modified, then:
-```
-git add .
-git pull 
-git config pull.rebase false
-git pull 
-git commit
-git push
-```
-
-### How to coauthor?
-
-```
-git add .
-git commit -m " <bababa>
-
-
-Co-authored-by: leahkawka <leahkawka@gmail.com>
-Co-authored-by: werywjw <werywjw@gmail.com>"
-git push origin main
-```
-
-### How to convert `.ipynb` to `.py`?
-
-```
-colab-convert livecam.ipynb livecam.py -nc -rm -o
-```
-
-### How to convert `.mp4` to `.gif`?
-
-Go to [ezgif webpage](https://ezgif.com/video-to-gif).
-
-### How to create submodules?
-
-```
-git submodule add https://github.com/werywjw/data.git
-```
-
-### How to create the virtual environment?
-
-```
-source /Users/wery/venv/bin/activate
-```
+---
+Projet réalisé dans le cadre du master MLSD.
