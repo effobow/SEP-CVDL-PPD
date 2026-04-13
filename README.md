@@ -59,4 +59,9 @@ Nous avons également tenté une ouverture vers un autre dataset externe, **ExpW
 Le dossier `documentation_modeles_ajoutes/` regroupe des fichiers de travail complémentaires liés à l’ajout et à l’analyse de modèles supplémentaires.
 
 ---
-Projet réalisé dans le cadre du master MLSD.
+Projet réalisé dans le cadre de notre master MLSD.
+
+Dan Sebag
+Gaspard Lugat
+Mehdi Benayed
+Dimitri Deramond
