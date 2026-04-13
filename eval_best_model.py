@@ -21,11 +21,11 @@ def main():
                              std=[0.229, 0.224, 0.225]),
     ])
 
-    #test_dataset = GiMeFiveDataset(
-    #    csv_file='archive/FER2013/test_FER_labels.csv',
-    #    img_dir='archive/FER2013/test/',
-    #    transform=transform
-    #)
+    test_dataset = GiMeFiveDataset(
+        csv_file='archive/FER2013/test_FER_labels.csv',
+        img_dir='archive/FER2013/test/',
+        transform=transform
+    )
 
     #test_dataset = GiMeFiveDataset(
     #    csv_file='archive/EXPW/expw_labels.csv',
@@ -33,11 +33,11 @@ def main():
     #    transform=transform
     #)
 
-    test_dataset = GiMeFiveDataset(
-        csv_file='archive/JAFFE/jaffe_labels.csv',
-        img_dir='archive/JAFFE/images/',
-        transform=transform
-    )
+    #test_dataset = GiMeFiveDataset(
+    #    csv_file='archive/JAFFE/jaffe_labels.csv',
+    #    img_dir='archive/JAFFE/images/',
+    #    transform=transform
+    #)
 
     test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False, num_workers=0)
 
