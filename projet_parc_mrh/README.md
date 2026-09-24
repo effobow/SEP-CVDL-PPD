@@ -4,46 +4,37 @@ Ce projet construit une chaîne reproductible pour produire une série de part d
 
 La cible est :
 
-`part_residences_principales = nb_residences_principales / nb_logements`
+part_residences_principales = nb_residences_principales / nb_logements
 
 Le pipeline sépare trois statuts :
 
-- `OBSERVEE` pour les millésimes issus du Recensement.
-- `INTERPOLEE` pour les années situées entre deux observations.
-- `PREDITE` pour les années postérieures au dernier millésime communal.
+- OBSERVEE pour les millésimes issus du Recensement.
+- INTERPOLEE pour les années situées entre deux observations.
+- PREDITE pour les années postérieures au dernier millésime communal.
 
 La sortie métier existe sous deux formes :
 
-- `predictions_long.csv` : code INSEE, année, valeur, statut et modèle.
-- `predictions_wide.csv` : code INSEE et une colonne par année.
+- predictions_long.csv : code INSEE, année, valeur, statut et modèle.
+- predictions_wide.csv : code INSEE et une colonne par année.
 
 ## Architecture
 
-```text
 projet_parc_mrh/
 ├── configs/default.yml
 ├── data/reference/
 ├── docs/
 ├── scripts/
-│   ├── download_sources.py
-│   └── run_pipeline.py
 ├── src/parc_mrh/
-│   ├── __init__.py
-│   ├── __main__.py
-│   └── pipeline.py
 ├── tests/
 └── .github/workflows/ci.yml
-```
 
 ## Méthode
 
-Les points communaux observés utilisent les millésimes 2012, 2017 et 2023. La base 2023 est le jeu long `DS_RP_LOGEMENT_PRINC`. Les données historiques sont ramenées vers la géographie communale 2026 avec la table officielle de passage Insee.
-
-Lorsqu'une commune historique se scinde en plusieurs communes actuelles, le projet répartit les effectifs historiques selon le nombre de logements observé en 2023 dans les communes cibles. Cette règle est une allocation de modélisation. Elle n'est pas présentée comme une donnée Insee.
+La publication Insee du logement en 2023 diffuse les années 2012, 2017 et 2023 dans la géographie communale au 1er janvier 2026. Le pipeline exploite directement cette source harmonisée. Il n'ajoute donc pas de réallocation historique par table de passage dans la chaîne principale.
 
 Deux familles de projection sont évaluées :
 
-1. régression linéaire locale sur la transformation logit de la part ;
+1. régression linéaire locale sur l'échelle logit ;
 2. projection calibrée sur la trajectoire annuelle EAPL.
 
 Le modèle retenu pour les années futures est celui qui obtient la MAE moyenne la plus faible sur les backtests 2017 et 2023.
@@ -54,48 +45,30 @@ Le projet ajoute un diagnostic de Breusch-Pagan pour l'hétéroscédasticité et
 
 Dans PowerShell :
 
-```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -e ".[dev]"
 python -m pytest
-```
-
-Si PowerShell bloque l'activation :
-
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
-```
 
 ## Exécution
 
-Télécharge d'abord les sources :
-
-```powershell
 python scripts\download_sources.py
-```
-
-Puis lance le pipeline :
-
-```powershell
 python scripts\run_pipeline.py
-```
 
-Les résultats sont écrits dans `data/processed/`.
+Les résultats sont écrits dans data/processed/.
 
 ## Mise à jour
 
 Lorsqu'un nouveau millésime communal apparaît :
 
-1. ajoute la source dans `configs/default.yml` ;
-2. ajoute l'année dans `observed_years` ;
-3. ajuste `forecast_start_year` ;
+1. ajoute ou remplace la source dans configs/default.yml ;
+2. ajoute l'année dans observed_years ;
+3. ajuste forecast_start_year ;
 4. actualise la référence EAPL ;
 5. lance les tests ;
 6. relance le téléchargement ;
 7. relance le pipeline ;
-8. contrôle les backtests et les doublons `code_insee/annee`.
+8. contrôle les backtests et les doublons code_insee/annee.
 
-Sources officielles : la publication Insee des bases logement, la page des tables de passage des communes et la publication EAPL sont référencées dans `configs/default.yml` et `docs/METHODOLOGY.md`.
+Les sources officielles sont documentées dans docs/METHODOLOGY.md.
