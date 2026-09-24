@@ -1,0 +1,29 @@
+project:
+  canonical_geography_year: 2026
+  observed_years: [2012, 2017, 2023]
+  output_year_start: 2012
+  output_year_end: 2030
+  forecast_start_year: 2024
+
+sources:
+  logement_2023:
+    url: "https://api.insee.fr/melodi/file/DS_RP_LOGEMENT_PRINC/DS_RP_LOGEMENT_PRINC_2023_CSV_FR"
+    description: "Base Logement INSEE 2023 au format harmonisé, contenant les années 2012, 2017 et 2023."
+  eapl_reference_url: "https://www.insee.fr/fr/statistiques/8640662"
+
+geography:
+  canonical_year: 2026
+  source_url: "https://www.insee.fr/fr/statistiques/8997194"
+
+model:
+  probability_epsilon: 0.0005
+  beta_clip_min: -3.0
+  beta_clip_max: 3.0
+  shrinkage_weight_local: 0.75
+  recent_years_for_national_trend: 5
+  classification_threshold: 0.80
+
+paths:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  eapl_file: "data/reference/eapl_part_rp_france_hors_mayotte.csv"
