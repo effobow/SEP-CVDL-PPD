@@ -6,30 +6,14 @@ project:
   forecast_start_year: 2024
 
 sources:
-  logement_2017:
-    url: "https://www.insee.fr/fr/statistiques/fichier/4515532/base-ccc-logement-2017.zip"
-    description: "Base communale logement 2017 pour les points historiques 2012 et 2017."
   logement_2023:
     url: "https://api.insee.fr/melodi/file/DS_RP_LOGEMENT_PRINC/DS_RP_LOGEMENT_PRINC_2023_CSV_FR"
-    description: "Base Logement INSEE 2023 au format long."
+    description: "Base Logement INSEE 2023 au format harmonisé, contenant les années 2012, 2017 et 2023."
   eapl_reference_url: "https://www.insee.fr/fr/statistiques/8640662"
 
-columns:
-  2012:
-    geo: ["CODGEO", "CODE_GEO", "CODGEO_2012", "COMMUNE"]
-    dep: ["DEP", "CODE_DEPARTEMENT"]
-    total_logements: ["P12_LOG", "LOG_2012", "NB_LOG_2012"]
-    residences_principales: ["P12_RP", "RP_2012", "NB_RP_2012"]
-  2017:
-    geo: ["CODGEO", "CODE_GEO", "CODGEO_2017", "COMMUNE"]
-    dep: ["DEP", "CODE_DEPARTEMENT"]
-    total_logements: ["P17_LOG", "LOG_2017", "NB_LOG_2017"]
-    residences_principales: ["P17_RP", "RP_2017", "NB_RP_2017"]
-
 geography:
-  historical_years: [2012, 2017]
   canonical_year: 2026
-  source_url: "https://www.insee.fr/fr/information/7671867"
+  source_url: "https://www.insee.fr/fr/statistiques/8997194"
 
 model:
   probability_epsilon: 0.0005
