@@ -1,8 +1,23 @@
 from pathlib import Path
+import re
 
+import requests
 import yaml
 
 from parc_mrh.pipeline import download, extract
+
+
+def resolve_geography_zip(page_url: str) -> str:
+    html = requests.get(page_url, timeout=60).text
+    hrefs = re.findall(r'href=["']([^"']+\.zip)["']', html, flags=re.I)
+    candidates = [h for h in hrefs if "geo2003_geo2026" in h.lower()]
+    if not candidates:
+        raise RuntimeError(
+            "Le lien officiel de la table de passage 2003-2026 n'a pas été trouvé. "
+            "Vérifie la page Insee de référence."
+        )
+    href = candidates[0]
+    return href if href.startswith("http") else "https://www.insee.fr" + href
 
 
 def main() -> None:
@@ -16,7 +31,7 @@ def main() -> None:
 
     download(cfg["sources"]["logement_2017"]["url"], z2017)
     download(cfg["sources"]["logement_2023"]["url"], z2023)
-    download(cfg["geography"]["source_url"], zgeo)
+    download(resolve_geography_zip(cfg["geography"]["source_url"]), zgeo)
 
     extract(z2017, raw / "logement_2017", (".csv",))
     extract(z2023, raw / "logement_2023", (".csv",))
