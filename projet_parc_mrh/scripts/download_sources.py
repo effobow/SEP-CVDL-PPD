@@ -1,42 +1,25 @@
 from pathlib import Path
-import re
 
-import requests
 import yaml
 
 from parc_mrh.pipeline import download, extract
 
 
-def resolve_geography_zip(page_url: str) -> str:
-    html = requests.get(page_url, timeout=60).text
-    hrefs = re.findall(r'href=["']([^"']+\.zip)["']', html, flags=re.I)
-    candidates = [h for h in hrefs if "geo2003_geo2026" in h.lower()]
-    if not candidates:
-        raise RuntimeError(
-            "Le lien officiel de la table de passage 2003-2026 n'a pas été trouvé. "
-            "Vérifie la page Insee de référence."
-        )
-    href = candidates[0]
-    return href if href.startswith("http") else "https://www.insee.fr" + href
-
-
 def main() -> None:
     root = Path(__file__).resolve().parents[1]
-    cfg = yaml.safe_load((root / "configs/default.yml").read_text(encoding="utf-8"))
-    raw = root / cfg["paths"]["raw_dir"]
+    config = yaml.safe_load(
+        (root / "configs/default.yml").read_text(encoding="utf-8")
+    )
+    raw = root / config["paths"]["raw_dir"]
+    archive = raw / "downloads/logement_2023.zip"
 
-    z2017 = raw / "downloads/logement_2017.zip"
-    z2023 = raw / "downloads/logement_2023.zip"
-    zgeo = raw / "downloads/table_passage_geo2003_geo2026.zip"
-
-    download(cfg["sources"]["logement_2017"]["url"], z2017)
-    download(cfg["sources"]["logement_2023"]["url"], z2023)
-    download(resolve_geography_zip(cfg["geography"]["source_url"]), zgeo)
-
-    extract(z2017, raw / "logement_2017", (".csv",))
-    extract(z2023, raw / "logement_2023", (".csv",))
-    extract(zgeo, raw / "geographie", (".csv", ".xlsx", ".xls"))
-    print("Sources INSEE téléchargées et extraites.")
+    download(config["sources"]["logement_2023"]["url"], archive)
+    extract(
+        archive,
+        raw / "logement_2023",
+        (".csv",),
+    )
+    print("Source INSEE 2023 téléchargée et extraite.")
 
 
 if __name__ == "__main__":
